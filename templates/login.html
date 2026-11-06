@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>OwO Farm — Login</title>
+  <link rel="stylesheet" href="/static/css/style.css" />
+</head>
+<body class="auth-body">
+  <div class="auth-card">
+    <div class="brand">
+      <div class="brand-mark">◈</div>
+      <h1>OwO Farm</h1>
+      <p class="muted">Private access · enter your credentials</p>
+    </div>
+    <form id="loginForm" autocomplete="on">
+      <label>Username</label>
+      <input type="text" id="username" name="username" required placeholder="username" />
+      <label>Password</label>
+      <input type="password" id="password" name="password" required placeholder="••••••••" />
+      <button type="submit" class="btn primary full" id="submitBtn">SUBMIT</button>
+      <p class="error" id="error" hidden></p>
+    </form>
+  </div>
+  <script>
+    const form = document.getElementById('loginForm');
+    const err = document.getElementById('error');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      err.hidden = true;
+      const btn = document.getElementById('submitBtn');
+      btn.disabled = true;
+      btn.textContent = 'Checking…';
+      try {
+        const res = await fetch('/api/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            username: document.getElementById('username').value,
+            password: document.getElementById('password').value,
+          }),
+        });
+        const data = await res.json();
+        if (!data.ok) {
+          err.textContent = data.error || 'Login failed.';
+          err.hidden = false;
+          btn.disabled = false;
+          btn.textContent = 'SUBMIT';
+          return;
+        }
+        window.location.href = data.redirect || '/dashboard';
+      } catch (ex) {
+        err.textContent = 'Network error. Try again.';
+        err.hidden = false;
+        btn.disabled = false;
+        btn.textContent = 'SUBMIT';
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>OwO Farm — Dashboard</title>
+  <link rel="stylesheet" href="/static/css/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <button class="icon-btn" id="menuBtn" aria-label="Menu">☰</button>
+    <div class="topbar-title">OwO Farm</div>
+    <div class="topbar-user">
+      <span id="who">{{ username }}</span>
+      <button class="btn ghost sm" id="logoutBtn">Logout</button>
+    </div>
+  </header>
+
+  <nav class="side-panel" id="sidePanel" hidden>
+    <button class="side-link active" data-tab="deployments">Deployments</button>
+    <button class="side-link" data-tab="support">Support Server</button>
+    <button class="side-link" data-tab="info">Info &amp; Tutorial</button>
+  </nav>
+  <div class="overlay" id="overlay" hidden></div>
+
+  <main class="main">
+    <!-- Deployments -->
+    <section class="tab" id="tab-deployments">
+      <div class="section-head">
+        <h2>Deployments</h2>
+        <button class="btn primary" id="newDepBtn">+ New deployment</button>
+      </div>
+      <div id="depEmpty" class="empty-state" hidden>
+        <p>No deployment yet. Create one to get started.</p>
+      </div>
+      <div id="depList" class="card-list"></div>
+      <div id="depDetail" class="detail-panel" hidden></div>
+    </section>
+
+    <!-- Support -->
+    <section class="tab" id="tab-support" hidden>
+      <div class="embed-card">
+        <h2>Support Server</h2>
+        <p class="muted">Need help, updates, or a slot? Join the community.</p>
+        <a class="btn primary" href="https://discord.gg/qsUeGszmZ" target="_blank" rel="noopener">Join Server</a>
+      </div>
+    </section>
+
+    <!-- Info -->
+    <section class="tab" id="tab-info" hidden>
+      <article class="prose">
+        <h2>Info &amp; Tutorial</h2>
+        <p>This is a shared OwO farming panel. You log in with a provided account, attach one Discord user token and one channel, then run timed farm sessions.</p>
+        <h3>Quick start</h3>
+        <ol>
+          <li>Open <strong>Deployments</strong> → <strong>New deployment</strong>.</li>
+          <li>Paste a valid Discord <em>user</em> token and the target channel ID. Both are validated live.</li>
+          <li>Open your deployment. Set <strong>HuntBot</strong> and <strong>Speed</strong> as you like (saved permanently).</li>
+          <li>Toggle <strong>Farm</strong> ON. If a global slot is free, farming starts for <strong>3 hours</strong>.</li>
+          <li>When time ends, Farm turns OFF and locks for <strong>3 hours</strong> before you can start again.</li>
+        </ol>
+        <h3>Rules</h3>
+        <ul>
+          <li>One deployment per account. Delete to replace token/channel.</li>
+          <li>Only <strong>3</strong> farms can run at once across everyone. If full, wait and try later.</li>
+          <li>Tokens must be unique. Channels may be shared.</li>
+          <li>If a token dies later, delete the deployment and create a new one.</li>
+        </ul>
+        <h3>Speed modes</h3>
+        <p><code>lifetime</code> (default, safest cadence), <code>durable</code>, <code>efficient</code>, <code>fast</code>.</p>
+        <p class="muted">Use responsibly. This tool is for practice on accounts you control.</p>
+      </article>
+    </section>
+  </main>
+
+  <!-- Modal: new deployment -->
+  <div class="modal" id="modalNew" hidden>
+    <div class="modal-card">
+      <h3>New deployment</h3>
+      <label>Discord user token</label>
+      <input type="password" id="tokInput" placeholder="token" autocomplete="off" />
+      <label>Channel ID</label>
+      <input type="text" id="chInput" placeholder="channel snowflake" />
+      <p class="error" id="modalErr" hidden></p>
+      <div class="row">
+        <button class="btn ghost" id="modalCancel">Cancel</button>
+        <button class="btn primary" id="modalAdd">ADD WORKER</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: delete confirm -->
+  <div class="modal" id="modalDel" hidden>
+    <div class="modal-card">
+      <h3>Delete deployment?</h3>
+      <p class="muted">This removes the saved token and settings. Cannot be undone.</p>
+      <div class="row">
+        <button class="btn ghost" id="delCancel">Cancel</button>
+        <button class="btn danger" id="delConfirm">CONFIRM</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/static/js/dashboard.js"></script>
+</body>
+</html>

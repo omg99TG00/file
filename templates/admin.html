@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>OwO Farm — Admin</title>
+  <link rel="stylesheet" href="/static/css/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-title">Admin · OwO Farm</div>
+    <div class="topbar-user">
+      <span>{{ username }}</span>
+      <button class="btn ghost sm" id="logoutBtn">Logout</button>
+    </div>
+  </header>
+  <main class="main admin-main">
+    <section class="card">
+      <div class="section-head">
+        <h2>Live slots</h2>
+        <div class="row gap">
+          <span class="pill" id="slotPill">0 / 3</span>
+          <button class="btn ghost sm" id="refreshSlots">Refresh</button>
+          <button class="btn danger sm" id="pauseBtn">Global pause</button>
+        </div>
+      </div>
+      <div id="slotList" class="card-list"></div>
+    </section>
+
+    <section class="card">
+      <div class="section-head"><h2>Users &amp; deployments</h2></div>
+      <div id="userList" class="table-wrap"></div>
+    </section>
+
+    <section class="card">
+      <div class="section-head"><h2>Audit log</h2></div>
+      <div id="auditList" class="audit"></div>
+    </section>
+  </main>
+  <script src="/static/js/admin.js"></script>
+</body>
+</html>
