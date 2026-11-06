@@ -1,0 +1,38 @@
+name: Build code
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - make_repo.sh
+      - .github/workflows/build-code.yml
+
+jobs:
+  expand:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Expand full repo from make_repo.sh
+        run: |
+          chmod +x make_repo.sh
+          ./make_repo.sh
+
+      - name: Show tree
+        run: find . -type f -not -path './.git/*' | sort
+
+      - name: Commit expanded files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --staged --quiet; then
+            echo "No changes"
+          else
+            git commit -m "Build code: expand full OwO Farm tree"
+            git push
+          fi
+          
