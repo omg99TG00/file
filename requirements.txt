@@ -1,14 +1,9 @@
 flask
-flask-cors
 waitress
 supabase
 cryptography
 discord.py-self
 aiohttp
 requests
-pillow
-numpy
-colorama
 python-dotenv
 bcrypt
-PyJWT
